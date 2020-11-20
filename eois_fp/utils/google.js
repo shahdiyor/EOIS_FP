@@ -2,10 +2,10 @@ const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 const doc = new GoogleSpreadsheet('1HMfImH1VZDL1FNwGw2ny6ISoiYOSUR9-OPw-n_Lw8Jo');
 
-async function loadData() {
+
+async function GetCommonBalance() {
     await doc.useServiceAccountAuth(require('../settings/eoisfp-b24d8a9448a0.json'));
     await doc.loadInfo();
-    console.log(doc.title);
     const sheet = doc.sheetsByIndex[0];
     await sheet.loadCells('A21:C123');
     let data = [];
@@ -18,28 +18,37 @@ async function loadData() {
     }
     return data;
 }
-async function loadBalanceRows(from, to){
-    await doc.useServiceAccountAuth(require('../settings/eoisfp-b24d8a9448a0.json'));
-    await doc.loadInfo();
-    const sheet = doc.sheetsByIndex[0];
-    await sheet.loadCells(from +':'+to);
-    let data_sp=[];
 
-    for(let i = sheet.getCellByA1(from).rowIndex; i<sheet.getCellByA1(to).rowIndex;i++)
+function summRow(from, to, sheet) {
+    let data = [];
+    for(let i = sheet.getCellByA1(from).rowIndex; i < sheet.getCellByA1(to).rowIndex;i++)
     {
         let sum = 0;
-        for(let j=sheet.getCellByA1(from).columnIndex; j<sheet.getCellByA1(to).columnIndex; j++) {
+        for(let j = sheet.getCellByA1(from).columnIndex; j < sheet.getCellByA1(to).columnIndex; j++) {
             
             sum += sheet.getCell(i, j).value;
         }
-        data_sp.push(sum);
+        data.push(sum);
     }
-    return data_sp;
+    return data;
+}
+
+async function loadBalanceRows() {
+    await doc.useServiceAccountAuth(require('../settings/eoisfp-b24d8a9448a0.json'));
+    await doc.loadInfo();
+    const sheet = doc.sheetsByIndex[0];
+    await sheet.loadCells('D21:CA123');
+    let sport = summRow('D21', 'Q123', sheet);
+    let salary = summRow('R21', 'AL123', sheet);
+    let best = summRow('AM21', 'AY123', sheet);
+    let promotion = summRow('BA21', 'BN123', sheet);
+    let penalty = summRow('BO21', 'CA123', sheet);
+    return [sport, salary, best, promotion, penalty];
 }
 
 doc_fuctions = {
-    loadData,
-    loadBalanceRows   
+    loadBalanceRows,
+    GetCommonBalance 
 }
 
 module.exports = doc_fuctions;

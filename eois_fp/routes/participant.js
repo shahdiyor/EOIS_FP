@@ -8,7 +8,7 @@ router.post('/', (req, res) => {
       req.body.id
     ];
     console.log(params);
-    db.any("SELECT name,participants.id,number_firm FROM participants INNER JOIN firms ON participants.firm_id=firms.id WHERE participants.id=$1", params)
+    db.any("SELECT surname,name,participants.id,number_firm FROM participants INNER JOIN firms ON participants.firm_id=firms.id WHERE participants.id=$1", params)
     .then(data => { 
       if (data && data.length ===1) {
         console.log(data[0]);
