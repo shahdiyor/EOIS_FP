@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var doc_functions = require('./utils/google');
 
 var googleRouter = require('./routes/google');
 var authRouter = require('./routes/auth');
@@ -18,6 +19,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+async function loadGoogle() {
+    await doc_functions.loadDoc();
+    await doc_functions.loadParticipants();
+}
+
+loadGoogle();
 
 app.use('/google', googleRouter);
 app.use('/positions', positionsRouter);

@@ -11,8 +11,4 @@ router.get('/', async (req, res) => {
   res.send(part);
 });
 
-router.get('/distr', async (req, res) => {
-  
-});
-
 module.exports = router;
