@@ -20,4 +20,8 @@ router.get('/edit', async (req, res) => {
   res.send('OK');
 });
 
+router.get('/days', (req, res) => {
+  res.send(doc_functions.getDays());
+});
+
 module.exports = router;

@@ -118,11 +118,22 @@ async function editCell(name, day, reason, value) {
     console.log(sheet.getCellByA1(column + row).value);
 }
 
+function getDays() {
+    return {
+        sportColumns,
+        salaryColumns,
+        bestColumns,
+        promotionColumns,
+        penaltyColumns
+    }
+}
+
 doc_functions = {
     loadDoc,
     loadBalanceRows,
     loadParticipantsWithDays,
-    editCell 
+    editCell,
+    getDays
 }
 
 module.exports = doc_functions;
