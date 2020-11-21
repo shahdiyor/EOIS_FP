@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 async function loadGoogle() {
     await doc_functions.loadDoc();
-    await doc_functions.loadParticipants();
+    await doc_functions.loadParticipantsWithDays();
 }
 
 loadGoogle();
