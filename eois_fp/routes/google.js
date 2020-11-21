@@ -4,9 +4,11 @@ var doc_functions = require('../utils/google');
 
 router.get('/', async (req, res) => {
   let name = req.query.name;
+  console.log(req.query.name);
   console.log('Google API request start');
   let part = await doc_functions.loadBalanceRows(name);
   console.log('Google API request end');
+  console.log(part);
   res.send(part);
 });
 
