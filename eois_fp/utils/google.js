@@ -110,9 +110,12 @@ async function editCell(name, day, reason, value) {
         column = penaltyColumns.find(c => c.day == day).column;
     }
     console.log(column + row);
+    console.log(value);
     await sheet.loadCells(column + row);
-    sheet.getCellByA1(column + row).value = value;
-    sheet.saveUpdatedCells();
+    sheet.getCellByA1(column + row).valueType = 'numberValue';
+    sheet.getCellByA1(column + row).value = Number(value);
+    await sheet.saveUpdatedCells();
+    console.log(sheet.getCellByA1(column + row).value);
 }
 
 doc_functions = {
