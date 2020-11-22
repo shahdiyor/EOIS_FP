@@ -7,6 +7,9 @@
 var app = require('../app');
 var debug = require('debug')('eois-fp:server');
 var http = require('http');
+var WebSocketServer = new require('ws');
+
+var clients = {};
 
 /**
  * Get port from environment and store in Express.
@@ -88,3 +91,25 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+var webSocketServer = new WebSocketServer.Server({
+  port:8081
+});
+
+webSocketServer.on('connection', ws => {
+  var id = Math.random();
+  clients[id] = ws;
+  console.log("new connection " + id);
+
+  ws.on('message', message => {
+    console.log('recieved message ' + message);
+    for (var client in clients) {
+      clients[client].send(message);
+    }
+  });
+
+  ws.on('close', () => {
+    console.log('connection closed ' + id);
+    delete clients[id];
+  });
+});
