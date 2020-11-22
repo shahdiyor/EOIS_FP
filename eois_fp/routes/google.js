@@ -14,12 +14,19 @@ router.get('/', async (req, res) => {
 
 router.get('/edit', async (req, res) => {
   await doc_functions.editCell(
-    req.query.name, 
-    req.query.day, 
-    req.query.reason,
-    req.query.value
+    req.body.name, 
+    req.body.day, 
+    req.body.reason,
+    req.body.value
   );
-  res.send('OK');
+  // let params=[
+  //   req.body.name, 
+  //   req.body.day, 
+  //   req.body.reason,
+  //   req.body.quantity
+  // ]
+  // console.log(params);
+  //res.send(req.body.succes,"true");
 });
 
 router.get('/days', (req, res) => {

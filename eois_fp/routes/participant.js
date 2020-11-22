@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
       req.body.id
     ];
     console.log(params);
-    db.any("SELECT participants.id,number_firm,surname,name,title_position FROM participants INNER JOIN firms ON participants.firm_id=firms.id INNER JOIN positions ON participants.position_id = positions.id WHERE number_firm=$1 AND participants.id NOT IN ($2)", params)
+    db.any("SELECT participants.id,number_firm,surname,name,title_position,title_firm FROM participants INNER JOIN firms ON participants.firm_id=firms.id INNER JOIN positions ON participants.position_id = positions.id WHERE number_firm=$1 AND participants.id NOT IN ($2)", params)
     .then(data => { 
       console.log(data);
       res.send(data);
