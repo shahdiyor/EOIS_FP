@@ -71,7 +71,6 @@ function summRow(row, from, to, sheet) {
 }
 
 async function loadBalanceRows(name) {
-<<<<<<< Updated upstream
     let participant = participants.find(p => p.name == name);
     let row = participant.row;
     console.log(`A${row}:CA${row}`);
@@ -126,30 +125,6 @@ function getDays() {
         bestColumns,
         promotionColumns,
         penaltyColumns
-=======
-    await doc.useServiceAccountAuth(require('../settings/eoisfp-b24d8a9448a0.json'));
-    await doc.loadInfo();
-    const sheet = doc.sheetsByIndex[0];
-    await sheet.loadCells('A21:CA123');
-    let data = [];
-    let sport = summRow('D21', 'Q123', sheet);
-    let salary = summRow('R21', 'AL123', sheet);
-    let best = summRow('AM21', 'AY123', sheet);
-    let promotion = summRow('BA21', 'BN123', sheet);
-    let penalty = summRow('BO21', 'CA123', sheet);
-    for(let i = sheet.getCellByA1('A21').rowIndex; i < sheet.getCellByA1('A124').rowIndex; i++)
-    {   
-        data.push({
-            name: sheet.getCell(i, 0).value,
-            firm: sheet.getCell(i, 1).value,
-            balance: sheet.getCell(i, 2).value,
-            sport: sport[i-20],
-            salary: salary[i-20],
-            best: best[i-20],
-            promotion: promotion[i],
-            penalty: penalty[i]
-        });
->>>>>>> Stashed changes
     }
 }
 
